@@ -1,0 +1,23 @@
+{
+    "questions": [
+            {
+                "type": "multiple_choice",
+                "text": "What is the primary gas responsible for the greenhouse effect?",
+                "choices": ["Carbon dioxide", "Methane", "Ozone", "Nitrogen"],
+                "answer": "Carbon dioxide"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "Which energy source is considered renewable?",
+                "choices": ["Coal", "Natural gas", "Solar", "Petroleum"],
+                "answer": "Solar"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "What is the main driver of climate change?",
+                "choices": ["Deforestation", "Agriculture", "Fossil fuel burning", "Overfishing"],
+                "answer": "Fossil fuel burning"
+            },
+            {
+                
+            }
