@@ -19,5 +19,118 @@
                 "answer": "Fossil fuel burning"
             },
             {
-                
+                "type": "multiple_choice",
+                "text": "Which sector is the largest emitter of greenhouse gases?",
+                "choices": ["Transportation", "Electricity and heat production", "Agriculture", "Industrial processes"],
+                "answer": "Electricity and heat production"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "What percentage of the world’s water is freshwater?",
+                "choices": ["3%", "10%", "23%", "47%"],
+                "answer": "3%"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "Which country is the largest producer of carbon dioxide?",
+                "choices": ["United States", "China", "India", "Russia"],
+                "answer": "China"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "Which of these is a consequence of global warming?",
+                "choices": ["Sea level rise", "Increase in polar bear population", "Decrease in hurricanes", "Shorter growing seasons"],
+                "answer": "Sea level rise"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "What is the process of converting waste material into new products called?",
+                "choices": ["Decomposition", "Recycling", "Landfilling", "Incineration"],
+                "answer": "Recycling"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "Which is not a renewable resource?",
+                "choices": ["Solar energy", "Wind energy", "Coal", "Hydropower"],
+                "answer": "Coal"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "What does biodiversity refer to?",
+                "choices": ["Variety of ecosystems in the world", "Different species of plants and animals", "Genetic variation within a species", "All of the above"],
+                "answer": "All of the above"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "Which gas is not a greenhouse gas?",
+                "choices": ["Methane", "Oxygen", "Nitrous oxide", "Water vapor"],
+                "answer": "Oxygen"
+            },
+            {
+                "type": "multiple_choice",
+                "text": "What is the main cause of ocean acidification?",
+                "choices": ["Oil spills", "Increased sea temperatures", "Plastic pollution", "Absorption of CO2 by the oceans"],
+                "answer": "Absorption of CO2 by the oceans"
+            },
+            {
+                "type": "true_false",
+                "text": "Deforestation contributes to global warming.",
+                "answer": "True"
+            },
+            {
+                "type": "true_false",
+                "text": "Ozone depletion is mainly caused by carbon dioxide emissions.",
+                "answer": "False"
+            },
+            {
+                "type": "true_false",
+                "text": "Renewable energy sources can never run out.",
+                "answer": "True"
+            },
+            {
+                "type": "true_false",
+                "text": "Planting trees has no impact on the environment.",
+                "answer": "False"
+            },
+            {
+                "type": "true_false",
+                "text": "Climate change only affects polar regions.",
+                "answer": "False"
+            },
+            {
+                "type": "true_false",
+                "text": "Recycling can help reduce greenhouse gas emissions.",
+                "answer": "True"
+            },
+            {
+                "type": "true_false",
+                "text": "Only humans are affected by climate change.",
+                "answer": "False"
+            },
+            {
+                "type": "true_false",
+                "text": "Using public transportation can reduce carbon emissions.",
+                "answer": "True"
+            },
+            {
+                "type": "true_false",
+                "text": "Global warming and climate change are the same thing.",
+                "answer": "False"   
+            },
+            {
+                "type": "true_false",
+                "text": "Organic farming can help reduce environmental impact.",
+                "answer": "True"   
+            },
+            {
+                "type": "true_false",
+                "text": "The majority of Earth's freshwater is in rivers and lakes.",
+                "answer": "False"
+            },
+            {
+                "type": "true_false",
+                "text": "Urbanization has no effect on the environment.",
+                "answer": "True"  
             }
+        ]
+}
