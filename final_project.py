@@ -4,23 +4,42 @@ import json
 
 class Question:
     def __init__(self, text, choices, correct_answer):
+        """
+        Initializes a new Question instance.
+        
+        - Parameters:
+        text (str): The question text.
+        choices (list): A list of answer choices.
+        correct_answer (str): The correct answer.
+        """
         self.text = text
         self.choices = choices
         self.correct_answer = correct_answer
 
     def display_question(self):
+        """Prints question and the choices to console."""
+
         print(self.text)
         for idx, choice in enumerate(self.choices, start=1):
             print(f"{idx}. {choice}")
 
     def validate_answer(self, user_answer):
+        """
+        Validates the user's answer with the correct answer.
+
+        - Parameters:
+        user_answer (str): The user's answer.
+
+        - Returns:
+        bool: True if the answer is correct, False otherwise.
+        """
         return user_answer.lower() == self.correct_answer.lower()
 
-class MultipleChoiceQuestion(Question):
+class MultipleChoiceQuestion(Question): # inherits from Question class
     def __init__(self, text, choices, correct_answer):
         super().__init__(text, choices, correct_answer)
 
-class TrueFalseQuestion(Question):
+class TrueFalseQuestion(Question): # inherits from Question class
     def __init__(self, text, correct_answer):
         super().__init__(text, ["True", "False"], correct_answer)
 
@@ -34,6 +53,15 @@ class Quiz:
         return self.questions[self.current_question_index]
 
     def check_answer(self, user_answer):
+        """
+        Checks the given answer with the current question's answer.
+
+        - Parameters:
+        user_answer (str): The user's answer.
+
+        - Returns:
+        A bool: True if answer is corect and False if not.
+        """
         current_question = self.get_next_question()
         correct = current_question.validate_answer(user_answer)
         self.current_question_index += 1 
@@ -53,6 +81,16 @@ class Quiz:
         return self.current_question_index >= len(self.questions)
 
 def load_questions_from_file(filename, category):
+    """
+    Loads the quiz's questions from the JSON file for a certain category, hard or eady.
+
+    - Parameters:
+    filename (str): Directory path to JSON file.
+    category (str): Category of questions to load.
+
+    - Returns:
+    list: A list of Question objects.
+    """
     with open(filename, 'r') as file:
         data = json.load(file)
         questions = []
@@ -64,13 +102,19 @@ def load_questions_from_file(filename, category):
                     questions.append(TrueFalseQuestion(q['text'], q['answer']))
         return questions
 
-class QuizGUI:
+class QuizGUI: # This is the graphical user interface for the quiz application. 
     def __init__(self):
+        """
+        Initializes the main window and starts the game.
+        """
         self.window = tk.Tk()
         self.window.title("Climate Change or Time to Change: The Quiz Game")
         self.start_screen()
 
     def start_screen(self):
+        """
+        Launches the start window with the title of the game and a start button.
+        """
         self.start_frame = tk.Frame(self.window)
         self.start_frame.pack(pady=20)
 
@@ -78,12 +122,15 @@ class QuizGUI:
         tk.Button(self.start_frame, text="Start Quiz", font=("Helvetica", 30), command=self.category_selection).pack()
 
     def category_selection(self):
+        """
+        Displays the wimdow with two categories to choose from.
+        """
         self.start_frame.destroy()
 
         self.category_frame = tk.Frame(self.window)
         self.category_frame.pack(pady=20)
 
-        tk.Label(self.category_frame, text="Select Category", font=("Helvetica", 40)).pack(pady=20)
+        tk.Label(self.category_frame, text="Select a Category:", font=("Helvetica", 40)).pack(pady=20)
         tk.Button(self.category_frame, text="Easy Mode", font=("Helvetica", 20), command=lambda: self.start_quiz("easy")).pack()
         tk.Button(self.category_frame, text="Hard Mode", font=("Helvetica", 20), command=lambda: self.start_quiz("hard")).pack()
 
@@ -151,20 +198,3 @@ class QuizGUI:
 if __name__ == "__main__":
     app = QuizGUI()
     app.run()
-
-def select_category():
-    def start_quiz(category):
-        questions = load_questions_from_file('final_project_2140/quiz_questions.json', category)
-        quiz = Quiz(questions)
-        app = QuizGUI(quiz)
-        app.run()
-
-    category_window = tk.Tk()
-    category_window.title("Select a category:")
-
-    tk.Button(category_window, text="Easy", font=("Helvetica", 20), command=lambda: start_quiz("easy")).pack()
-    tk.Button(category_window, text="Hard", font=("Helvetica", 20), command=lambda: start_quiz("hard")).pack()
-
-    category_window.mainloop()
-
-select_category()
