@@ -64,11 +64,14 @@ class QuizGUI:
     def __init__(self, quiz):
         self.quiz = quiz
         self.window = tk.Tk()
-        self.window.title("Quiz Game")
+        self.window.title("Climate Change or Time to Change: The Quiz Game")
         
         self.question_label = tk.Label(self.window, text="", font=("Helvetica", 30))
         self.question_label.pack(pady=20)
         
+        self.feedback_label = tk.Label(self.window, text="", font=("Helvetica", 20))
+        self.feedback_label.pack(pady=20)
+
         self.answer_frame = tk.Frame(self.window)
         self.answer_frame.pack(pady=20)
         
@@ -79,7 +82,7 @@ class QuizGUI:
 
     def update_question(self):
         if self.quiz.is_quiz_over():
-            messagebox.showinfo("You Finished the Quiz, Congrats!", f"Your final score is: {self.quiz.score}")
+            messagebox.showinfo("You Finished the Quiz, Congrats!", f"Good Job! Final score: {self.quiz.score}")
             self.window.destroy()
             return
 
@@ -96,19 +99,24 @@ class QuizGUI:
     def select_answer(self, answer):
         self.selected_answer = answer
 
+    def clear_feedback(self):
+        self.feedback_label.config(text="")
+
     def check_answer(self):
         correct = self.quiz.check_answer(self.selected_answer)
         if correct:
-            messagebox.showinfo("Answer", "Correct!")
-            self.quiz.score += 1  # Update score for correct answer
+            self.feedback_label.config(text="Correct!", fg="green")
+            self.quiz.score += 1
         else:
-            messagebox.showinfo("Answer", "Wrong!")
+            self.feedback_label.config(text="Wrong!", fg="red")
+
+        self.window.after(1000, self.clear_feedback)
 
         if self.quiz.is_quiz_over():
             messagebox.showinfo("Quiz Finished", f"Your final score is: {self.quiz.score}")
             self.window.destroy()
         else:
-            self.update_question()
+            self.window.after(1500, self.update_question)
 
     def run(self):
         self.window.mainloop()
@@ -123,8 +131,8 @@ def select_category():
     category_window = tk.Tk()
     category_window.title("Select Category")
 
-    tk.Button(category_window, text="Easy", command=lambda: start_quiz("easy")).pack()
-    tk.Button(category_window, text="Hard", command=lambda: start_quiz("hard")).pack()
+    tk.Button(category_window, text="Easy", font=("Helvetica", 20), command=lambda: start_quiz("easy")).pack()
+    tk.Button(category_window, text="Hard", font=("Helvetica", 20), command=lambda: start_quiz("hard")).pack()
 
     category_window.mainloop()
 
