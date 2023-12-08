@@ -35,12 +35,16 @@ class Quiz:
 
     def check_answer(self, user_answer):
         current_question = self.get_next_question()
-        if current_question.validate_answer(user_answer):
+        correct = current_question.validate_answer(user_answer)
+        self.current_question_index += 1  # Increment the question index
+
+        if correct:
             self.score += 1
             print("You are Correct! You get 1 point\n")
+            return True
         else:
             print("You are Wrong :(\n")
-        self.current_question_index += 1
+            return False
 
     def has_questions_left(self):
         return self.current_question_index < len(self.questions)
@@ -103,10 +107,9 @@ class QuizGUI:
         self.feedback_label.config(text="")
 
     def check_answer(self):
-        correct = self.quiz.check_answer(self.selected_answer)
+        correct = self.quiz.check_answer(self.selected_answer.lower())
         if correct:
             self.feedback_label.config(text="Correct!", fg="green")
-            self.quiz.score += 1
         else:
             self.feedback_label.config(text="Wrong!", fg="red")
 
