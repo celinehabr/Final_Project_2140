@@ -1,3 +1,5 @@
+import tkinter as tk
+from tkinter import messagebox
 import json
 
 class Question:
@@ -42,6 +44,9 @@ class Quiz:
 
     def has_questions_left(self):
         return self.current_question_index < len(self.questions)
+    
+    def is_quiz_over(self):
+        return self.current_question_index >= len(self.questions)
 
 def load_questions_from_file(filename, category):
     with open(filename, 'r') as file:
@@ -55,21 +60,72 @@ def load_questions_from_file(filename, category):
                     questions.append(TrueFalseQuestion(q['text'], q['answer']))
         return questions
 
-def run_quiz(filename):
-    category = input("Select a category (easy/hard): ").lower()
-    while category not in ['easy', 'hard']:
-        print("Invalid category. Please choose 'easy' or 'hard'.")
-        category = input("Select a category (easy/hard): ").lower()
+class QuizGUI:
+    def __init__(self, quiz):
+        self.quiz = quiz
+        self.window = tk.Tk()
+        self.window.title("Quiz Game")
+        
+        self.question_label = tk.Label(self.window, text="", font=("Helvetica", 30))
+        self.question_label.pack(pady=20)
+        
+        self.answer_frame = tk.Frame(self.window)
+        self.answer_frame.pack(pady=20)
+        
+        self.confirm_button = tk.Button(self.window, text="Confirm", command=self.check_answer)
+        self.confirm_button.pack(pady=20)
+        
+        self.update_question()
 
-    questions = load_questions_from_file(filename, category)
-    quiz = Quiz(questions)
+    def update_question(self):
+        if self.quiz.is_quiz_over():
+            messagebox.showinfo("You Finished the Quiz, Congrats!", f"Your final score is: {self.quiz.score}")
+            self.window.destroy()
+            return
 
-    while quiz.has_questions_left():
-        current_question = quiz.get_next_question()
-        current_question.display_question()
-        user_answer = input("Your answer: ")
-        quiz.check_answer(user_answer)
+        current_question = self.quiz.get_next_question()
+        self.question_label.config(text=current_question.text)
+        
+        for widget in self.answer_frame.winfo_children():
+            widget.destroy()
+        
+        for option in current_question.choices:
+            btn = tk.Button(self.answer_frame, text=option, command=lambda opt=option: self.select_answer(opt))
+            btn.pack(side=tk.LEFT, expand=True)
 
-    print(f"Congrats, Your final score is: {quiz.score}!")
+    def select_answer(self, answer):
+        self.selected_answer = answer
 
-run_quiz('final_project_2140/quiz_questions.json')
+    def check_answer(self):
+        correct = self.quiz.check_answer(self.selected_answer)
+        if correct:
+            messagebox.showinfo("Answer", "Correct!")
+            self.quiz.score += 1  # Update score for correct answer
+        else:
+            messagebox.showinfo("Answer", "Wrong!")
+
+        if self.quiz.is_quiz_over():
+            messagebox.showinfo("Quiz Finished", f"Your final score is: {self.quiz.score}")
+            self.window.destroy()
+        else:
+            self.update_question()
+
+    def run(self):
+        self.window.mainloop()
+
+def select_category():
+    def start_quiz(category):
+        questions = load_questions_from_file('final_project_2140/quiz_questions.json', category)
+        quiz = Quiz(questions)
+        app = QuizGUI(quiz)
+        app.run()
+
+    category_window = tk.Tk()
+    category_window.title("Select Category")
+
+    tk.Button(category_window, text="Easy", command=lambda: start_quiz("easy")).pack()
+    tk.Button(category_window, text="Hard", command=lambda: start_quiz("hard")).pack()
+
+    category_window.mainloop()
+
+select_category()
