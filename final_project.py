@@ -36,7 +36,7 @@ class Quiz:
     def check_answer(self, user_answer):
         current_question = self.get_next_question()
         correct = current_question.validate_answer(user_answer)
-        self.current_question_index += 1  # Increment the question index
+        self.current_question_index += 1 
 
         if correct:
             self.score += 1
@@ -65,11 +65,35 @@ def load_questions_from_file(filename, category):
         return questions
 
 class QuizGUI:
-    def __init__(self, quiz):
-        self.quiz = quiz
+    def __init__(self):
         self.window = tk.Tk()
         self.window.title("Climate Change or Time to Change: The Quiz Game")
-        
+        self.start_screen()
+
+    def start_screen(self):
+        self.start_frame = tk.Frame(self.window)
+        self.start_frame.pack(pady=20)
+
+        tk.Label(self.start_frame, text="Climate Change or Time to Change: The Quiz Game", font=("Helvetica", 40)).pack(pady=20)
+        tk.Button(self.start_frame, text="Start Quiz", font=("Helvetica", 30), command=self.category_selection).pack()
+
+    def category_selection(self):
+        self.start_frame.destroy()
+
+        self.category_frame = tk.Frame(self.window)
+        self.category_frame.pack(pady=20)
+
+        tk.Label(self.category_frame, text="Select Category", font=("Helvetica", 40)).pack(pady=20)
+        tk.Button(self.category_frame, text="Easy Mode", font=("Helvetica", 20), command=lambda: self.start_quiz("easy")).pack()
+        tk.Button(self.category_frame, text="Hard Mode", font=("Helvetica", 20), command=lambda: self.start_quiz("hard")).pack()
+
+    def start_quiz(self, category):
+        self.category_frame.destroy()
+
+        self.quiz = Quiz(load_questions_from_file('final_project_2140/quiz_questions.json', category))
+        self.setup_quiz_interface()
+
+    def setup_quiz_interface(self):
         self.question_label = tk.Label(self.window, text="", font=("Helvetica", 30))
         self.question_label.pack(pady=20)
         
@@ -109,20 +133,24 @@ class QuizGUI:
     def check_answer(self):
         correct = self.quiz.check_answer(self.selected_answer.lower())
         if correct:
-            self.feedback_label.config(text="Correct!", fg="green")
+            self.feedback_label.config(text="Correct! You get 1 point!", fg="green")
         else:
-            self.feedback_label.config(text="Wrong!", fg="red")
+            self.feedback_label.config(text="Wrong :(", fg="red")
 
         self.window.after(1000, self.clear_feedback)
 
         if self.quiz.is_quiz_over():
-            messagebox.showinfo("Quiz Finished", f"Your final score is: {self.quiz.score}")
+            messagebox.showinfo("Quiz Finished", f"Quiz Finished! Congrats your final score is: {self.quiz.score}")
             self.window.destroy()
         else:
-            self.window.after(1500, self.update_question)
+            self.window.after(1700, self.update_question)
 
     def run(self):
         self.window.mainloop()
+
+if __name__ == "__main__":
+    app = QuizGUI()
+    app.run()
 
 def select_category():
     def start_quiz(category):
@@ -132,7 +160,7 @@ def select_category():
         app.run()
 
     category_window = tk.Tk()
-    category_window.title("Select Category")
+    category_window.title("Select a category:")
 
     tk.Button(category_window, text="Easy", font=("Helvetica", 20), command=lambda: start_quiz("easy")).pack()
     tk.Button(category_window, text="Hard", font=("Helvetica", 20), command=lambda: start_quiz("hard")).pack()
