@@ -14,7 +14,7 @@ Limitations
 
 How to play:
 - First ensure that all the files necessary are in the same diretcory. The files are final_project.py and quiz_questions.json.
-- Once all the files are in the same directory, open the final_project file and run the code.
+- Once all the files are in the same directory, open the final_project file and run the code or type in the Python command line 'final_project.py'. 
 - When launched, the game presents a start screen with the game's title and a button to begin the quiz.
 - The user then selects the quiz difficulty that they want to play in (Easy Mode or Hard Mode).
 - Once the category is chosen, the quiz starts and shows one question at a time with multiple choices or true or false.
